@@ -61,6 +61,7 @@ main {
 }
 
 p {
+  height: 0;
   color: var(--fontColor);
   font-size: 1.3rem;
 }

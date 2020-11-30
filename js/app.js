@@ -1,3 +1,4 @@
+window.onload = startSentence(document.querySelector('.subtitle-text'));
 // Create variable to store the text element <p>
 const subtitleElement = document.querySelectorAll('.subtitle-text');
 
@@ -11,56 +12,35 @@ subtitleElement.forEach((sentence) => {
     .join('');
 });
 
-// Create a variable to store the spans
-let charsToFade = document.querySelectorAll('.faded-chars');
+function startSentence(sentence) {
+  if (!sentence) {
+    //Check if te called sentence exist
+    return;
+  } else {
+    setTimeout(() => {
+      startFadeIn(sentence);
+    }, 2600); // timer to fade in the sentence
+  }
+}
 
 function fadeOut(sentence) {
   setTimeout(() => {
     sentence.childNodes.forEach((char) => {
       char.classList.remove('fade-in');
     });
-  }, 3000);
+  }, 2500); // timer to fade out the sentence
 }
 
-function startFade(sentence) {
+function startFadeIn(currentSentence) {
   let counter = 0;
   let fadeInTimer = setInterval(() => {
-    sentence.childNodes[counter].classList.add('fade-in');
+    currentSentence.childNodes[counter].classList.add('fade-in');
     counter++;
-    if (counter == sentence.childNodes.length) {
+    if (counter == currentSentence.childNodes.length) {
       clearInterval(fadeInTimer);
-      fadeOut(sentence);
-      let nextSentence = sentence.nextElementSibling;
-      startSentence(nextSentence);
+      fadeOut(currentSentence); // fade-out the current sentence
+      let nextSentence = currentSentence.nextElementSibling; // target the next sentence
+      startSentence(nextSentence); // start fade-in the next sentence
     }
-  }, 100);
+  }, 100); // timer to fade in each character of the sentence
 }
-
-/* function startFade(sentence) {
-  let counter = 0;
-  let fadeInTimer = setInterval(() => {
-    let currentSentence = document.querySelectorAll('.faded-chars')[counter];
-    currentSentence.classList.add('fade-in');
-    console.log;
-    counter++;
-    if (counter == charsToFade.length) {
-      clearInterval(fadeInTimer);
-      fadeOut();
-      let nextSentence = subtitleElement.nextElementSibling;
-      startSentence(nextSentence);
-    }
-  }, 100);
-}
- */
-function startSentence(sentence) {
-  if (!sentence) {
-    return;
-  } else {
-    startFade(sentence);
-  }
-}
-
-startSentence(document.querySelector('.subtitle-text'));
-
-console.log(document.querySelector('.subtitle-text').childNodes);
-console.log(document.querySelector('.faded-chars'));
