@@ -1,32 +1,37 @@
-// Create variable that stores the delay time of the timeOut
-const SENTENCE_DELAY = 1000;
-// Create variables that store the elements of the DOM
+// Create variable to store the text element <p>
 const subtitleElement = document.querySelector('.subtitle-text');
-const subtitleText = subtitleElement.textContent;
-const charArray = subtitleText.split('');
-// Disappear the original <p> text from the page
-subtitleElement.textContent = '';
 
-// Create variable that stores the array of spans
-const spanArray = charArray.map((char) => {
-  return (subtitleElement.innerHTML += `<span class="faded-chars">${char}</span>`);
-});
+// Modify the innerHTML of <p>
+subtitleElement.innerHTML = subtitleElement.textContent
+  .split('')
+  .map((char) => {
+    return `<span class="faded-chars">${char}</span>`;
+  })
+  .join('');
 
-// Create the timeout for the appearance of spans
-let outTimer = setTimeout(() => {
-  // Create variable that stores the counter of the spans
+// Create a variable to store the spans
+let charsToFade = document.querySelectorAll('.faded-chars');
+
+function fadeOut() {
+  setTimeout(() => {
+    document.querySelectorAll('.faded-chars').forEach((char) => {
+      char.classList.remove('fade-in');
+    });
+  }, 3000);
+}
+
+function startFade() {
   let counter = 0;
-  // Set time intervals
-  let intervalTimer = setInterval(() => {
-    let spansNumbered = document.querySelectorAll('.faded-chars');
-    // Create the new class
-    spansNumbered[counter].classList.add('fade');
+  let fadeInTimer = setInterval(() => {
+    let i = document.querySelectorAll('.faded-chars')[counter];
+    i.classList.add('fade-in');
+    console.log;
     counter++;
-    if (counter === spanArray.length) {
-      // Finish the interval
-      clearInterval(intervalTimer);
-      intervalTimer = null;
-      return;
+    if (counter == charsToFade.length) {
+      clearInterval(fadeInTimer);
+      fadeOut();
     }
   }, 100);
-}, SENTENCE_DELAY);
+}
+
+startFade();
