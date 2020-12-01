@@ -76,3 +76,8 @@ p {
   opacity: 1;
   color: #ce0000;
 }
+
+.final-subtitle-text {
+  color: #0e4f50;
+  opacity: 0;
+}

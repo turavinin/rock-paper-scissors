@@ -1,4 +1,6 @@
-window.onload = startSentence(document.querySelector('.subtitle-text'));
+/* window.onload = startSentence(document.querySelector('.subtitle-text')); */
+
+// FADE IN AND FADE OUT WELCOME TEXT
 // Create variable to store the text element <p>
 const subtitleElement = document.querySelectorAll('.subtitle-text');
 
@@ -14,7 +16,7 @@ subtitleElement.forEach((sentence) => {
 
 function startSentence(sentence) {
   if (!sentence) {
-    //Check if te called sentence exist
+    //Check if te called sentence doesnt exist
     return;
   } else {
     setTimeout(() => {
@@ -44,3 +46,7 @@ function startFadeIn(currentSentence) {
     }
   }, 100); // timer to fade in each character of the sentence
 }
+
+const charsToFade = document.querySelectorAll('.faded-chars');
+
+charsToFade.addEventListener.("transitionend", ())
