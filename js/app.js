@@ -65,3 +65,5 @@ function displayFinalSubtitle() {
     finalSubtitle.classList.add('final-fade-in');
   }, FINAL_SENTENCE_APPARITION_DELAY);
 }
+
+// GAME
