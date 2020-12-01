@@ -1,4 +1,10 @@
-/* window.onload = startSentence(document.querySelector('.subtitle-text')); */
+// TIMERS
+const SENTENCE_APPARITION_DELAY = 2600;
+const CHARACTER_INTERVAL = 100;
+const FINAL_SENTENCE_APPARITION_DELAY = 3000;
+
+// PAGE LOADER
+window.onload = startSentence(document.querySelector('.subtitle-text'));
 
 // FADE IN AND FADE OUT WELCOME TEXT
 // Create variable to store the text element <p>
@@ -21,7 +27,7 @@ function startSentence(sentence) {
   } else {
     setTimeout(() => {
       startFadeIn(sentence);
-    }, 2600); // timer to fade in the sentence
+    }, SENTENCE_APPARITION_DELAY); // timer to fade in the sentence
   }
 }
 
@@ -44,9 +50,18 @@ function startFadeIn(currentSentence) {
       let nextSentence = currentSentence.nextElementSibling; // target the next sentence
       startSentence(nextSentence); // start fade-in the next sentence
     }
-  }, 100); // timer to fade in each character of the sentence
+  }, CHARACTER_INTERVAL); // timer to fade in each character of the sentence
 }
 
-const charsToFade = document.querySelectorAll('.faded-chars');
+// FINAL SUBTITLE APARRITION
+let finalChar = document.querySelector('.subtitle').lastElementChild
+  .lastElementChild;
 
-charsToFade.addEventListener.("transitionend", ())
+finalChar.addEventListener('transitionend', displayFinalSubtitle);
+
+function displayFinalSubtitle() {
+  let finalSubtitle = document.querySelector('.final-subtitle-text');
+  setTimeout(() => {
+    finalSubtitle.classList.add('final-fade-in');
+  }, FINAL_SENTENCE_APPARITION_DELAY);
+}
