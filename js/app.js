@@ -4,7 +4,7 @@ const CHARACTER_INTERVAL = 100;
 const FINAL_SENTENCE_APPARITION_DELAY = 3000;
 
 // PAGE LOADER
-/* window.onload = startSentence(document.querySelector('.subtitle-text')); */
+window.onload = startSentence(document.querySelector('.subtitle-text'));
 
 // FADE IN AND FADE OUT WELCOME TEXT
 // Create variable to store the text element <p>
@@ -73,8 +73,8 @@ function displayFinalSubtitle() {
 const optionsToElect = ['Rock', 'Paper', 'Scissor'];
 
 // Variables of players count
-let player = 0;
-let computer = 0;
+let playerScore = 0;
+let alienScore = 0;
 
 // Function of alien random selection
 function computerSelection() {
@@ -95,19 +95,26 @@ buttons.forEach((e) => {
 function playRound() {
   let playerChoise = optionsToElect[this.id];
   let computerChoise = computerSelection();
-  console.log(`Player: ${playerChoise}`);
-  console.log(`Computer: ${computerChoise}`);
-  if (
+
+  if (playerChoise == computerChoise) {
+    document.querySelector('.final-subtitle-text').textContent = `It's a tie`;
+    console.log(`It's a tie!`);
+    return;
+  } else if (
     (playerChoise == optionsToElect[0] &&
       computerChoise == optionsToElect[2]) ||
     (playerChoise == optionsToElect[1] &&
       computerChoise == optionsToElect[0]) ||
     (playerChoise == optionsToElect[2] && computerChoise == optionsToElect[1])
   ) {
-    console.log(`You win! ${playerChoise} beats ${computerChoise}.`);
-    return (player += 1);
+    document.querySelector('.final-subtitle-text').textContent =
+      'You win the round!';
+    playerScore += 1;
+    document.querySelector('.human-number').textContent = playerScore;
   } else {
-    console.log(`You lose! ${computerChoise} beats ${playerChoise}.`);
-    return (computer += 1);
+    document.querySelector('.final-subtitle-text').textContent =
+      'You lose the round!';
+    alienScore += 1;
+    document.querySelector('.alien-number').textContent = alienScore;
   }
 }
