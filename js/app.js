@@ -4,7 +4,7 @@ const CHARACTER_INTERVAL = 100;
 const FINAL_SENTENCE_APPARITION_DELAY = 3000;
 
 // PAGE LOADER
-window.onload = startSentence(document.querySelector('.subtitle-text'));
+/* window.onload = startSentence(document.querySelector('.subtitle-text')); */
 
 // FADE IN AND FADE OUT WELCOME TEXT
 // Create variable to store the text element <p>
@@ -67,3 +67,47 @@ function displayFinalSubtitle() {
 }
 
 // GAME
+
+// ALIEN (COMPUTER) LOGIC
+// Global array with options
+const optionsToElect = ['Rock', 'Paper', 'Scissor'];
+
+// Variables of players count
+let player = 0;
+let computer = 0;
+
+// Function of alien random selection
+function computerSelection() {
+  // Variable = random election of array length
+  let randomElection = Math.floor(Math.random() * optionsToElect.length);
+  // Return the random election of the array
+  return optionsToElect[randomElection];
+}
+
+// HUMAN LOGIC
+// On click event return the id of the clicked button
+const buttons = document.querySelectorAll('.btn-circles');
+
+buttons.forEach((e) => {
+  e.addEventListener('click', playRound);
+});
+
+function playRound() {
+  let playerChoise = optionsToElect[this.id];
+  let computerChoise = computerSelection();
+  console.log(`Player: ${playerChoise}`);
+  console.log(`Computer: ${computerChoise}`);
+  if (
+    (playerChoise == optionsToElect[0] &&
+      computerChoise == optionsToElect[2]) ||
+    (playerChoise == optionsToElect[1] &&
+      computerChoise == optionsToElect[0]) ||
+    (playerChoise == optionsToElect[2] && computerChoise == optionsToElect[1])
+  ) {
+    console.log(`You win! ${playerChoise} beats ${computerChoise}.`);
+    return (player += 1);
+  } else {
+    console.log(`You lose! ${computerChoise} beats ${playerChoise}.`);
+    return (computer += 1);
+  }
+}
