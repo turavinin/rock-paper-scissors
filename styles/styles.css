@@ -5,6 +5,7 @@
 :root {
   --bgColor: #020218;
   --fontColor: #ffffff;
+  --shineColor: #49e819;
 }
 
 * {
@@ -153,6 +154,10 @@ main {
   margin: 0 10px;
 }
 
+.btn-circles:focus {
+  outline: none;
+}
+
 .wrapper {
   display: inline-flex;
   justify-content: center;
@@ -187,7 +192,8 @@ main {
   height: 50px;
   width: 50px;
   margin: 0 10px;
-  background: linear-gradient(to bottom, #130a0a, #1c2222);
+  background: linear-gradient(to bottom, #3a6464, #152727);
+  transition: all 0.2s ease;
 }
 
 .btn-elected:focus {
@@ -209,6 +215,14 @@ main {
 #elected-image {
   width: 20px;
   height: auto;
+}
+
+.btn-player {
+  opacity: 0;
+}
+
+.display-player-btn {
+  opacity: 1;
 }
 
 /* TRANSITIONS */
@@ -238,4 +252,25 @@ main {
   opacity: 1;
   color: #fff;
   transform: translateY(30px);
+}
+
+/* Shine of buttons */
+
+.shine {
+  animation: glowing 500ms ease-in-out;
+}
+
+@keyframes glowing {
+  0% {
+    background-color: var(--shineColor);
+    box-shadow: 0 0 5px var(--shineColor);
+  }
+  50% {
+    background-color: var(--shineColor);
+    box-shadow: 0 0 13px var(--shineColor);
+  }
+  100% {
+    background-color: var(--shineColor);
+    box-shadow: 0 0 2px var(--shineColor);
+  }
 }

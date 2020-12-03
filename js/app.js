@@ -1,12 +1,12 @@
-// TIMERS
+// TIMERS --------------------------------------------------------------------
 const SENTENCE_APPARITION_DELAY = 2600;
 const CHARACTER_INTERVAL = 100;
 const FINAL_SENTENCE_APPARITION_DELAY = 3000;
 
-// PAGE LOADER
+// PAGE LOADER ---------------------------------------------------------------
 window.onload = startSentence(document.querySelector('.subtitle-text'));
 
-// FADE IN AND FADE OUT WELCOME TEXT
+// FADE IN AND FADE OUT WELCOME TEXT -----------------------------------------
 // Create variable to store the text element <p>
 const subtitleElement = document.querySelectorAll('.subtitle-text');
 
@@ -53,7 +53,7 @@ function startFadeIn(currentSentence) {
   }, CHARACTER_INTERVAL); // timer to fade in each character of the sentence
 }
 
-// FINAL SUBTITLE APARRITION
+// FINAL SUBTITLE APARRITION ----------------------------------------------------
 let finalChar = document.querySelector('.subtitle').lastElementChild
   .lastElementChild;
 
@@ -66,9 +66,9 @@ function displayFinalSubtitle() {
   }, FINAL_SENTENCE_APPARITION_DELAY);
 }
 
-// GAME
+// GAME -------------------------------------------------------------------------
 
-// ALIEN (COMPUTER) LOGIC
+// ALIEN (COMPUTER) LOGIC ------------
 // Global array with options
 const optionsToElect = ['Rock', 'Paper', 'Scissor'];
 
@@ -84,21 +84,23 @@ function computerSelection() {
   return optionsToElect[randomElection];
 }
 
-// HUMAN LOGIC
+// HUMAN LOGIC -----------------------
 // On click event return the id of the clicked button
 const buttons = document.querySelectorAll('.btn-circles');
 
 buttons.forEach((e) => {
-  e.addEventListener('click', playRound);
+  e.addEventListener('click', () => {
+    playRound(e);
+    shinesTheChoosen(e);
+  });
 });
 
-function playRound() {
-  let playerChoise = optionsToElect[this.id];
+function playRound(e) {
+  let playerChoise = optionsToElect[e.id];
   let computerChoise = computerSelection();
 
   if (playerChoise == computerChoise) {
     document.querySelector('.final-subtitle-text').textContent = `It's a tie`;
-    console.log(`It's a tie!`);
     return;
   } else if (
     (playerChoise == optionsToElect[0] &&
@@ -117,4 +119,24 @@ function playRound() {
     alienScore += 1;
     document.querySelector('.alien-number').textContent = alienScore;
   }
+}
+
+// SHINE FUNCTION OF CLICKED BUTTONS --------
+function shinesTheChoosen(e) {
+  e.classList.remove('shine');
+  setInterval(() => {
+    e.classList.add('shine');
+  }, 100);
+}
+
+// DISPLAY PLAYER ELECTED CIRCLE --------
+buttons.forEach((e) => {
+  e.addEventListener('animationend', () => {
+    displayPlayerCircle(e);
+  });
+});
+
+function displayPlayerCircle(e) {
+  const playerCircle = document.querySelector('.btn-player');
+  playerCircle.classList.add('display-player-btn');
 }
