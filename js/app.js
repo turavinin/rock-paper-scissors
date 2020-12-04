@@ -139,4 +139,12 @@ buttons.forEach((e) => {
 function displayPlayerCircle(e) {
   const playerCircle = document.querySelector('.btn-player');
   playerCircle.classList.add('display-player-btn');
+
+  document.querySelector(
+    '.btn-player'
+  ).lastElementChild.innerHTML = `${e.lastElementChild.innerHTML}`;
+
+  let g = playerCircle.lastElementChild.lastElementChild;
+
+  console.log(g);
 }
