@@ -261,7 +261,7 @@ main {
 }
 
 /* Game fade in */
-.game-faded-out {
+/* .game-faded-out {
   opacity: 0;
   transition: all 1s ease-in;
 }
@@ -269,7 +269,7 @@ main {
 .game-fade-in {
   opacity: 1;
 }
-
+ */
 /* Shine of buttons */
 
 .shine {

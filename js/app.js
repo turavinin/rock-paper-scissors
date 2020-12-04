@@ -4,12 +4,12 @@ const CHARACTER_INTERVAL = 100;
 const FINAL_SENTENCE_APPARITION_DELAY = 3000;
 
 // PAGE LOADER ---------------------------------------------------------------
-window.onload = startSentence(document.querySelector('.subtitle-text'));
+/* window.onload = startSentence(document.querySelector('.subtitle-text')); */
 
 // FADE IN AND FADE OUT WELCOME TEXT -----------------------------------------
 // Create variable to store the text element <p>
 const subtitleElement = document.querySelectorAll('.subtitle-text');
-const gameWrapper = document.querySelector('.game-faded-out');
+/* const gameWrapper = document.querySelector('.game-faded-out'); */
 
 // Modify the innerHTML of <p>
 subtitleElement.forEach((sentence) => {
