@@ -222,7 +222,8 @@ main {
   height: auto;
 }
 
-.btn-player {
+.btn-player,
+.btn-alien {
   opacity: 0;
 }
 
@@ -257,6 +258,16 @@ main {
   opacity: 1;
   color: #fff;
   transform: translateY(30px);
+}
+
+/* Game fade in */
+.game-faded-out {
+  opacity: 0;
+  transition: all 1s ease-in;
+}
+
+.game-fade-in {
+  opacity: 1;
 }
 
 /* Shine of buttons */

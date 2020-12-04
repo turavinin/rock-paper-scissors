@@ -9,6 +9,7 @@ window.onload = startSentence(document.querySelector('.subtitle-text'));
 // FADE IN AND FADE OUT WELCOME TEXT -----------------------------------------
 // Create variable to store the text element <p>
 const subtitleElement = document.querySelectorAll('.subtitle-text');
+const gameWrapper = document.querySelector('.game-faded-out');
 
 // Modify the innerHTML of <p>
 subtitleElement.forEach((sentence) => {
@@ -63,6 +64,7 @@ function displayFinalSubtitle() {
   let finalSubtitle = document.querySelector('.final-subtitle-text');
   setTimeout(() => {
     finalSubtitle.classList.add('final-fade-in');
+    gameWrapper.classList.add('game-fade-in');
   }, FINAL_SENTENCE_APPARITION_DELAY);
 }
 
@@ -133,6 +135,7 @@ function shinesTheChoosen(e) {
 buttons.forEach((e) => {
   e.addEventListener('animationend', () => {
     displayPlayerCircle(e);
+    displayComputerCircle();
   });
 });
 
@@ -147,4 +150,18 @@ function displayPlayerCircle(e) {
 
   // Shine the elected circle
   shinesTheChoosen(playerCircle);
+}
+
+// DISPLAY COMPUTER ELECTED CIRCLE --------
+function displayComputerCircle() {
+  const computerCircle = document.querySelector('.btn-alien');
+  const randomElection = Math.floor(Math.random() * optionsToElect.length);
+  buttons.forEach((e) => {
+    if (randomElection == e.id) {
+      computerCircle.lastElementChild.innerHTML = `${e.lastElementChild.innerHTML}`;
+    }
+    computerCircle.classList.add('display-player-btn');
+  });
+  shinesTheChoosen(computerCircle);
+  console.log(randomElection);
 }
