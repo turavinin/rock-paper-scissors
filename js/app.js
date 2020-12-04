@@ -37,7 +37,7 @@ function fadeOut(sentence) {
     sentence.childNodes.forEach((char) => {
       char.classList.remove('fade-in');
     });
-  }, 2500); // timer to fade out the sentence
+  }, 2000); // timer to fade out the sentence
 }
 
 function startFadeIn(currentSentence) {
@@ -83,7 +83,7 @@ function computerSelection() {
   // Variable = random election of array length
   let randomElection = Math.floor(Math.random() * optionsToElect.length);
   // Return the random election of the array
-  return optionsToElect[randomElection];
+  return randomElection;
 }
 
 // HUMAN LOGIC -----------------------
@@ -92,35 +92,47 @@ const buttons = document.querySelectorAll('.btn-circles');
 
 buttons.forEach((e) => {
   e.addEventListener('click', () => {
-    playRound(e);
+    setTimeout(() => {
+      playRound(e);
+    }, 1500);
+    /* playRound(e); */
     shinesTheChoosen(e);
   });
 });
 
 function playRound(e) {
   let playerChoise = optionsToElect[e.id];
-  let computerChoise = computerSelection();
 
-  if (playerChoise == computerChoise) {
-    document.querySelector('.final-subtitle-text').textContent = `It's a tie`;
-    return;
-  } else if (
-    (playerChoise == optionsToElect[0] &&
-      computerChoise == optionsToElect[2]) ||
-    (playerChoise == optionsToElect[1] &&
-      computerChoise == optionsToElect[0]) ||
-    (playerChoise == optionsToElect[2] && computerChoise == optionsToElect[1])
-  ) {
-    document.querySelector('.final-subtitle-text').textContent =
-      'You win the round!';
-    playerScore += 1;
-    document.querySelector('.human-number').textContent = playerScore;
-  } else {
-    document.querySelector('.final-subtitle-text').textContent =
-      'You lose the round!';
-    alienScore += 1;
-    document.querySelector('.alien-number').textContent = alienScore;
-  }
+  let computerChoiseNumber = computerSelection();
+  let computerChoise = optionsToElect[computerChoiseNumber];
+
+  displayComputerCircle(computerChoiseNumber);
+
+  console.log(playerChoise);
+  console.log(computerChoise);
+
+  setTimeout(() => {
+    if (playerChoise == computerChoise) {
+      document.querySelector('.final-subtitle-text').textContent = `It's a tie`;
+      return;
+    } else if (
+      (playerChoise == optionsToElect[0] &&
+        computerChoise == optionsToElect[2]) ||
+      (playerChoise == optionsToElect[1] &&
+        computerChoise == optionsToElect[0]) ||
+      (playerChoise == optionsToElect[2] && computerChoise == optionsToElect[1])
+    ) {
+      document.querySelector('.final-subtitle-text').textContent =
+        'You win the round!';
+      playerScore += 1;
+      document.querySelector('.human-number').textContent = playerScore;
+    } else {
+      document.querySelector('.final-subtitle-text').textContent =
+        'You lose the round!';
+      alienScore += 1;
+      document.querySelector('.alien-number').textContent = alienScore;
+    }
+  }, 1000);
 }
 
 // SHINE FUNCTION OF CLICKED BUTTONS --------
@@ -128,14 +140,13 @@ function shinesTheChoosen(e) {
   e.classList.remove('shine');
   setInterval(() => {
     e.classList.add('shine');
-  }, 100);
+  }, 200);
 }
 
 // DISPLAY PLAYER ELECTED CIRCLE --------
 buttons.forEach((e) => {
   e.addEventListener('animationend', () => {
     displayPlayerCircle(e);
-    displayComputerCircle();
   });
 });
 
@@ -153,15 +164,16 @@ function displayPlayerCircle(e) {
 }
 
 // DISPLAY COMPUTER ELECTED CIRCLE --------
-function displayComputerCircle() {
+function displayComputerCircle(computerResult) {
   const computerCircle = document.querySelector('.btn-alien');
-  const randomElection = Math.floor(Math.random() * optionsToElect.length);
+  /* const randomElection = Math.floor(Math.random() * optionsToElect.length); */
+
   buttons.forEach((e) => {
-    if (randomElection == e.id) {
+    if (computerResult == e.id) {
       computerCircle.lastElementChild.innerHTML = `${e.lastElementChild.innerHTML}`;
+
+      computerCircle.classList.add('display-player-btn');
+      shinesTheChoosen(computerCircle);
     }
-    computerCircle.classList.add('display-player-btn');
   });
-  shinesTheChoosen(computerCircle);
-  console.log(randomElection);
 }
