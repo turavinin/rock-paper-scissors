@@ -6,10 +6,10 @@ const FINAL_SENTENCE_APPARITION_DELAY = 3000;
 // PAGE LOADER ---------------------------------------------------------------
 /* window.onload = startSentence(document.querySelector('.subtitle-text')); */
 
-// FADE IN AND FADE OUT WELCOME TEXT -----------------------------------------
+// FADE IN AND FADE OUT WELCOME TEXT-------------------------------------
 // Create variable to store the text element <p>
 const subtitleElement = document.querySelectorAll('.subtitle-text');
-/* const gameWrapper = document.querySelector('.game-faded-out'); */
+const gameWrapper = document.querySelector('.game-faded-out');
 
 // Modify the innerHTML of <p>
 subtitleElement.forEach((sentence) => {
@@ -95,7 +95,6 @@ buttons.forEach((e) => {
     setTimeout(() => {
       playRound(e);
     }, 1500);
-    /* playRound(e); */
     shinesTheChoosen(e);
   });
 });
@@ -177,3 +176,44 @@ function displayComputerCircle(computerResult) {
     }
   });
 }
+
+// Listen for dom changes to fade-out the elected buttons
+const observeFinalSubtitle = document.querySelector('.final-subtitle-text');
+
+const observer = new MutationObserver((change) => {
+  const evt = new CustomEvent('dom-changed', { detail: change });
+  document.body.dispatchEvent(evt);
+});
+
+observer.observe(observeFinalSubtitle, {
+  attributes: true,
+  childList: true,
+  subtree: true,
+});
+
+document.body.addEventListener('dom-changed', () => {
+  setTimeout(() => {
+    // remove player circle
+    const playerCircle = document.querySelector('.btn-player');
+    playerCircle.classList.remove('display-player-btn');
+
+    const computerCircle = document.querySelector('.btn-alien');
+    computerCircle.classList.remove('display-player-btn');
+  }, 500);
+});
+
+// DISABLE AND ENABLE BUTTONS
+buttons.forEach((e) => {
+  e.addEventListener('animationend', () => {
+    buttons.forEach((button) => {
+      button.classList.add('disable');
+    });
+  });
+});
+
+document.body.addEventListener('dom-changed', () => {
+  // enable buttons
+  buttons.forEach((button) => {
+    button.classList.remove('disable');
+  });
+});

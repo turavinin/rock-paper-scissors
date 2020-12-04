@@ -270,6 +270,7 @@ main {
   opacity: 1;
 }
  */
+
 /* Shine of buttons */
 
 .shine {
@@ -289,4 +290,9 @@ main {
     background-color: var(--shineColor);
     box-shadow: 0 0 2px var(--shineColor);
   }
+}
+
+/* Disable / Enable buttons */
+.disable {
+  pointer-events: none;
 }
