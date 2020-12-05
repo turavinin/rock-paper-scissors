@@ -142,10 +142,24 @@ function shinesTheChoosen(e) {
   }, 200);
 }
 
-// DISPLAY PLAYER ELECTED CIRCLE --------
+// DISPLAY AND DISAPPEAR PLAYER ELECTED CIRCLE --------
 buttons.forEach((e) => {
   e.addEventListener('animationend', () => {
     displayPlayerCircle(e);
+
+    // Disappear circles
+    setTimeout(() => {
+      let playerCircleToDisappear = document.querySelector('.btn-player');
+      playerCircleToDisappear.classList.remove('display-player-btn');
+
+      let computerCircleToDissapear = document.querySelector('.btn-alien');
+      computerCircleToDissapear.classList.remove('display-player-btn');
+
+      // enable main buttons
+      buttons.forEach((button) => {
+        button.classList.remove('disable');
+      });
+    }, 2500);
   });
 });
 
@@ -177,43 +191,11 @@ function displayComputerCircle(computerResult) {
   });
 }
 
-// Listen for dom changes to fade-out the elected buttons
-const observeFinalSubtitle = document.querySelector('.final-subtitle-text');
-
-const observer = new MutationObserver((change) => {
-  const evt = new CustomEvent('dom-changed', { detail: change });
-  document.body.dispatchEvent(evt);
-});
-
-observer.observe(observeFinalSubtitle, {
-  attributes: true,
-  childList: true,
-  subtree: true,
-});
-
-document.body.addEventListener('dom-changed', () => {
-  setTimeout(() => {
-    // remove player circle
-    const playerCircle = document.querySelector('.btn-player');
-    playerCircle.classList.remove('display-player-btn');
-
-    const computerCircle = document.querySelector('.btn-alien');
-    computerCircle.classList.remove('display-player-btn');
-  }, 500);
-});
-
-// DISABLE AND ENABLE BUTTONS
+// DISABLE MAIN BUTTOS
 buttons.forEach((e) => {
   e.addEventListener('animationend', () => {
     buttons.forEach((button) => {
       button.classList.add('disable');
     });
-  });
-});
-
-document.body.addEventListener('dom-changed', () => {
-  // enable buttons
-  buttons.forEach((button) => {
-    button.classList.remove('disable');
   });
 });
