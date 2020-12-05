@@ -107,9 +107,6 @@ function playRound(e) {
 
   displayComputerCircle(computerChoiseNumber);
 
-  console.log(playerChoise);
-  console.log(computerChoise);
-
   setTimeout(() => {
     if (playerChoise == computerChoise) {
       document.querySelector('.final-subtitle-text').textContent = `It's a tie`;
@@ -132,6 +129,16 @@ function playRound(e) {
       document.querySelector('.alien-number').textContent = alienScore;
     }
   }, 1000);
+}
+
+// GAME ----------------------------------------------
+
+function game(e) {
+  while (playerScore != 5 || alienScore != 5) {
+    setTimeout(() => {
+      playRound(e);
+    }, 1500);
+  }
 }
 
 // SHINE FUNCTION OF CLICKED BUTTONS --------
@@ -199,3 +206,5 @@ buttons.forEach((e) => {
     });
   });
 });
+
+// ORDENAR TODOOOOOOO BIEN
