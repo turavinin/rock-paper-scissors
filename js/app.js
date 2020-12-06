@@ -5,7 +5,7 @@ const CHARACTER_INTERVAL = 100;
 const FINAL_SENTENCE_APPARITION_DELAY = 3000;
 
 /* ------------------------------- PAGE LOADER ------------------------------ */
-window.onload = startSentence(document.querySelector('.subtitle-text'));
+/* window.onload = startSentence(document.querySelector('.subtitle-text')); */
 
 /* ------------------------------ DOM VARIABLES ----------------------------- */
 
@@ -88,9 +88,11 @@ function displayFinalSentence() {
 // Listen for the click events on the main buttons
 buttons.forEach((e) => {
   e.addEventListener('click', () => {
+    // Strat game
     setTimeout(() => {
       playRound(e);
     }, 1500);
+    // Shine the clicked button
     shinesButton(e);
   });
 });
@@ -185,8 +187,10 @@ function computerSelection() {
 
 // One round game
 function playRound(e) {
+  // Player election
   let playerChoise = optionsToElect[e.id];
 
+  // Computer election
   let computerChoiseNumber = computerSelection();
   let computerChoise = optionsToElect[computerChoiseNumber];
 
@@ -208,11 +212,13 @@ function playRound(e) {
         'You win the round!';
       playerScore += 1;
       document.querySelector('.human-number').textContent = playerScore;
+      return playerScore;
     } else {
       document.querySelector('.final-subtitle-text').textContent =
         'You lose the round!';
       alienScore += 1;
       document.querySelector('.alien-number').textContent = alienScore;
+      return alienScore;
     }
   }, 1000);
 }
