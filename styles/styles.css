@@ -354,3 +354,19 @@ main {
   color: rgb(0, 0, 0);
   transform: translateY(0px);
 }
+
+.restar {
+  display: flex;
+}
+
+.btn-restart {
+  background-color: transparent;
+  color: rgb(255, 255, 255);
+  border: none;
+  font-size: 2rem;
+  font-family: 'Syne Mono', monospace;
+}
+
+.btn-restart:hover {
+  color: #ce0000;
+}
