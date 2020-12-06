@@ -5,7 +5,7 @@ const CHARACTER_INTERVAL = 100;
 const FINAL_SENTENCE_APPARITION_DELAY = 3000;
 
 /* ------------------------------- PAGE LOADER ------------------------------ */
-/* window.onload = startSentence(document.querySelector('.subtitle-text')); */
+window.onload = startSentence(document.querySelector('.subtitle-text'));
 
 /* ------------------------------ DOM VARIABLES ----------------------------- */
 
@@ -16,6 +16,8 @@ const finalSentence = document.querySelector('.final-subtitle-text');
 const buttons = document.querySelectorAll('.btn-circles');
 const playerCircle = document.querySelector('.btn-player');
 const computerCircle = document.querySelector('.btn-alien');
+const humanWinSetence = document.querySelector('.human-win');
+const alienWinSetence = document.querySelector('.alien-win');
 
 /* ---------------------------------- INTRO --------------------------------- */
 
@@ -86,16 +88,9 @@ function displayFinalSentence() {
 /* -------------------------------- UI EVENTS ------------------------------- */
 //LISTENERS
 // Listen for the click events on the main buttons
-buttons.forEach((e) => {
-  e.addEventListener('click', () => {
-    // Strat game
-    setTimeout(() => {
-      playRound(e);
-    }, 1500);
-    // Shine the clicked button
-    shinesButton(e);
-  });
-});
+/* buttons.forEach((e) => {
+  e.addEventListener('click', () => {});
+}); */
 
 // Lister for the end of shine animation of main buttons
 buttons.forEach((e) => {
@@ -168,6 +163,15 @@ function enableMainButtons() {
   }, 2500);
 }
 
+function displayPostGameSentence(winnerSentence) {
+  gameWrapper.classList.remove('game-fade-in'); // Fade-out the game UI
+  finalSentence.classList.remove('final-fade-in'); // Fade-out final sentence
+
+  setTimeout(() => {
+    winnerSentence.classList.add('display-sentence');
+  }, 2000);
+}
+
 /* ------------------------------- GAME LOGIC ------------------------------- */
 
 // Array with options
@@ -185,40 +189,89 @@ function computerSelection() {
   return randomElection;
 }
 
-// One round game
-function playRound(e) {
-  // Player election
-  let playerChoise = optionsToElect[e.id];
+function game() {
+  buttons.forEach((e) => {
+    e.addEventListener('click', () => {
+      let playerChoise = optionsToElect[e.id];
+      let computerChoiseNumber = computerSelection();
+      let computerChoise = optionsToElect[computerChoiseNumber];
+      // Display circle elected by computer
 
-  // Computer election
-  let computerChoiseNumber = computerSelection();
-  let computerChoise = optionsToElect[computerChoiseNumber];
+      // Shine clicked button
+      shinesButton(e);
 
-  // Display computer chosen circle
-  displayComputerElectedCircle(computerChoiseNumber);
+      // Timeout for the start of the game
+      setTimeout(() => {
+        // Show computer elected button
+        displayComputerElectedCircle(computerChoiseNumber);
 
-  setTimeout(() => {
-    if (playerChoise == computerChoise) {
+        // Play the round
+        playRound(playerChoise, computerChoise);
+
+        if (playerScore == 3) {
+          // Timer to slowdown the restart of the game
+          playerCircle.addEventListener('transitionend', () => {
+            document.querySelector('.final-subtitle-text').textContent =
+              'You win the game!';
+          });
+          setTimeout(() => {
+            document.querySelector('.human-number').textContent = playerScore;
+            document.querySelector('.alien-number').textContent = alienScore;
+            displayPostGameSentence(humanWinSetence);
+          }, 3000);
+        } else if (alienScore == 3) {
+          playerCircle.addEventListener('transitionend', () => {
+            document.querySelector('.final-subtitle-text').textContent =
+              'You lose the game!';
+          });
+
+          // Timer to slowdown the restart of the game
+          setTimeout(() => {
+            document.querySelector('.human-number').textContent = playerScore;
+            document.querySelector('.alien-number').textContent = alienScore;
+            displayPostGameSentence(alienWinSetence);
+          }, 3000);
+        }
+      }, 1500);
+    });
+  });
+}
+
+function playRound(playerChoise, computerChoise) {
+  if (playerChoise == computerChoise) {
+    // Timer to slowdown the change of the count
+    setTimeout(() => {
       document.querySelector('.final-subtitle-text').textContent = `It's a tie`;
-      return;
-    } else if (
-      (playerChoise == optionsToElect[0] &&
-        computerChoise == optionsToElect[2]) ||
-      (playerChoise == optionsToElect[1] &&
-        computerChoise == optionsToElect[0]) ||
-      (playerChoise == optionsToElect[2] && computerChoise == optionsToElect[1])
-    ) {
+    }, 1000);
+    return;
+  } else if (
+    (playerChoise == optionsToElect[0] &&
+      computerChoise == optionsToElect[2]) ||
+    (playerChoise == optionsToElect[1] &&
+      computerChoise == optionsToElect[0]) ||
+    (playerChoise == optionsToElect[2] && computerChoise == optionsToElect[1])
+  ) {
+    playerScore += 1;
+
+    // Timer to slowdown the change of the count
+    setTimeout(() => {
       document.querySelector('.final-subtitle-text').textContent =
         'You win the round!';
-      playerScore += 1;
       document.querySelector('.human-number').textContent = playerScore;
-      return playerScore;
-    } else {
+    }, 1000);
+    return;
+  } else {
+    alienScore += 1;
+
+    // Timer to slowdown the change of the count
+    setTimeout(() => {
       document.querySelector('.final-subtitle-text').textContent =
         'You lose the round!';
-      alienScore += 1;
       document.querySelector('.alien-number').textContent = alienScore;
-      return alienScore;
-    }
-  }, 1000);
+    }, 1000);
+
+    return;
+  }
 }
+
+game();
