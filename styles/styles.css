@@ -33,6 +33,32 @@ header {
   margin-left: 20px;
 }
 
+.skip {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
+.skip-button {
+  background-color: transparent;
+  color: rgb(143, 143, 143);
+  border: none;
+  font-family: 'Syne Mono', monospace;
+}
+
+.skip-button:hover {
+  color: #ce0000;
+  outline: none;
+}
+
+.skip-button:defined {
+  outline: none;
+}
+
+.disable-intro {
+  display: none;
+}
+
 .h1-title {
   font-family: 'Kanit', sans-serif;
   color: var(--fontColor);

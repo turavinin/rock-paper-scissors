@@ -18,6 +18,7 @@ const playerCircle = document.querySelector('.btn-player');
 const computerCircle = document.querySelector('.btn-alien');
 const humanWinSetence = document.querySelector('.human-win');
 const alienWinSetence = document.querySelector('.alien-win');
+const skipButton = document.querySelector('.skip-button');
 
 /* ---------------------------------- INTRO --------------------------------- */
 
@@ -86,11 +87,6 @@ function displayFinalSentence() {
 }
 
 /* -------------------------------- UI EVENTS ------------------------------- */
-//LISTENERS
-// Listen for the click events on the main buttons
-/* buttons.forEach((e) => {
-  e.addEventListener('click', () => {});
-}); */
 
 // Lister for the end of shine animation of main buttons
 buttons.forEach((e) => {
@@ -102,7 +98,10 @@ buttons.forEach((e) => {
   });
 });
 
-// FUNCTIONS
+skipButton.addEventListener('click', skipIntro);
+
+/* -------------------------------- FUNCTIONS ------------------------------- */
+
 // Shines the main buttons when clicked
 function shinesButton(e) {
   e.classList.remove('shine');
@@ -163,6 +162,7 @@ function enableMainButtons() {
   }, 2500);
 }
 
+// Display final sentence after the game
 function displayPostGameSentence(winnerSentence) {
   gameWrapper.classList.remove('game-fade-in'); // Fade-out the game UI
   finalSentence.classList.remove('final-fade-in'); // Fade-out final sentence
@@ -170,6 +170,12 @@ function displayPostGameSentence(winnerSentence) {
   setTimeout(() => {
     winnerSentence.classList.add('display-sentence');
   }, 2000);
+}
+
+function skipIntro() {
+  subtitleWrapper.classList.add('disable-intro');
+  finalSentence.classList.add('final-fade-in'); // Fade-in final sentence
+  gameWrapper.classList.add('game-fade-in'); // Fade-in the game UI
 }
 
 /* ------------------------------- GAME LOGIC ------------------------------- */
