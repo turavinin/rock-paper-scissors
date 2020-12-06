@@ -1,17 +1,25 @@
-// TIMERS --------------------------------------------------------------------
+/* --------------------------------- TIMERS --------------------------------- */
+
 const SENTENCE_APPARITION_DELAY = 2600;
 const CHARACTER_INTERVAL = 100;
 const FINAL_SENTENCE_APPARITION_DELAY = 3000;
 
-// PAGE LOADER ---------------------------------------------------------------
-/* window.onload = startSentence(document.querySelector('.subtitle-text')); */
+/* ------------------------------- PAGE LOADER ------------------------------ */
+window.onload = startSentence(document.querySelector('.subtitle-text'));
 
-// FADE IN AND FADE OUT WELCOME TEXT-------------------------------------
-// Create variable to store the text element <p>
+/* ------------------------------ DOM VARIABLES ----------------------------- */
+
+const subtitleWrapper = document.querySelector('.subtitle');
 const subtitleElement = document.querySelectorAll('.subtitle-text');
 const gameWrapper = document.querySelector('.game-faded-out');
+const finalSentence = document.querySelector('.final-subtitle-text');
+const buttons = document.querySelectorAll('.btn-circles');
+const playerCircle = document.querySelector('.btn-player');
+const computerCircle = document.querySelector('.btn-alien');
 
-// Modify the innerHTML of <p>
+/* ---------------------------------- INTRO --------------------------------- */
+
+// Create a spans of characters for each intro sentences
 subtitleElement.forEach((sentence) => {
   sentence.innerHTML = sentence.textContent
     .split('')
@@ -21,64 +29,153 @@ subtitleElement.forEach((sentence) => {
     .join('');
 });
 
+// Initialize intro and next intro sentences
 function startSentence(sentence) {
   if (!sentence) {
-    //Check if te called sentence doesnt exist
+    //Check if there is a next sentence to initialize
     return;
   } else {
     setTimeout(() => {
-      startFadeIn(sentence);
-    }, SENTENCE_APPARITION_DELAY); // timer to fade in the sentence
+      fadeInFadeOut(sentence); // Initialize sentence
+    }, SENTENCE_APPARITION_DELAY); // Timer to fade-in the sentence
   }
 }
 
+// Function to fade-out a sentence
 function fadeOut(sentence) {
   setTimeout(() => {
     sentence.childNodes.forEach((char) => {
       char.classList.remove('fade-in');
     });
-  }, 2000); // timer to fade out the sentence
+  }, 2000); // Timer to fade-out the sentence
 }
 
-function startFadeIn(currentSentence) {
+// Fade-in and fade-out each intro sentence
+function fadeInFadeOut(currentSentence) {
   let counter = 0;
   let fadeInTimer = setInterval(() => {
     currentSentence.childNodes[counter].classList.add('fade-in');
     counter++;
     if (counter == currentSentence.childNodes.length) {
       clearInterval(fadeInTimer);
-      fadeOut(currentSentence); // fade-out the current sentence
-      let nextSentence = currentSentence.nextElementSibling; // target the next sentence
-      startSentence(nextSentence); // start fade-in the next sentence
+      fadeOut(currentSentence); // Fade-out the current sentence
+      let nextSentence = currentSentence.nextElementSibling; // Target the next sentence
+      startSentence(nextSentence); // Start fade-in the next intro sentence
     }
-  }, CHARACTER_INTERVAL); // timer to fade in each character of the sentence
+  }, CHARACTER_INTERVAL); // Timer to fade-in each character of the sentence
 }
 
-// FINAL SUBTITLE APARRITION ----------------------------------------------------
-let finalChar = document.querySelector('.subtitle').lastElementChild
-  .lastElementChild;
+/* ------------------------ FINAL SENTENCE & GAME UI APPARITION ----------------------- */
 
-finalChar.addEventListener('transitionend', displayFinalSubtitle);
+// Listen the end of transition of the final character of intro
+const finalCharOfLastIntroSentence =
+  subtitleWrapper.lastElementChild.lastElementChild;
+finalCharOfLastIntroSentence.addEventListener(
+  'transitionend',
+  displayFinalSentence
+);
 
-function displayFinalSubtitle() {
-  let finalSubtitle = document.querySelector('.final-subtitle-text');
+// Display final sentence and display the Game UI
+function displayFinalSentence() {
   setTimeout(() => {
-    finalSubtitle.classList.add('final-fade-in');
-    gameWrapper.classList.add('game-fade-in');
+    finalSentence.classList.add('final-fade-in'); // Fade-in final sentence
+    gameWrapper.classList.add('game-fade-in'); // Fade-in the game UI
   }, FINAL_SENTENCE_APPARITION_DELAY);
 }
 
-// GAME -------------------------------------------------------------------------
+/* -------------------------------- UI EVENTS ------------------------------- */
+//LISTENERS
+// Listen for the click events on the main buttons
+buttons.forEach((e) => {
+  e.addEventListener('click', () => {
+    setTimeout(() => {
+      playRound(e);
+    }, 1500);
+    shinesButton(e);
+  });
+});
 
-// ALIEN (COMPUTER) LOGIC ------------
-// Global array with options
+// Lister for the end of shine animation of main buttons
+buttons.forEach((e) => {
+  e.addEventListener('animationend', () => {
+    displayPlayerElectedCircles(e);
+    blockTheMainButtons();
+    disappearElectedCircles();
+    enableMainButtons();
+  });
+});
+
+// FUNCTIONS
+// Shines the main buttons when clicked
+function shinesButton(e) {
+  e.classList.remove('shine');
+  setInterval(() => {
+    e.classList.add('shine');
+  }, 200);
+}
+
+// Display player chosen circle
+function displayPlayerElectedCircles(e) {
+  playerCircle.classList.add('display-player-btn');
+
+  // Fill button with corresponding image
+  document.querySelector(
+    '.btn-player'
+  ).lastElementChild.innerHTML = `${e.lastElementChild.innerHTML}`;
+
+  // Shines computers the elected new circle
+  shinesButton(playerCircle);
+}
+
+// Display computer chosen circle
+function displayComputerElectedCircle(computerResult) {
+  // Fill button with corresponding image
+  buttons.forEach((e) => {
+    if (computerResult == e.id) {
+      computerCircle.lastElementChild.innerHTML = `${e.lastElementChild.innerHTML}`;
+      computerCircle.classList.add('display-player-btn');
+      shinesButton(computerCircle);
+    }
+  });
+}
+// Dissapear Elected Circles
+function disappearElectedCircles() {
+  setTimeout(() => {
+    // Disappear player circle
+    playerCircle.classList.remove('display-player-btn');
+
+    // Disappear alien circle
+    computerCircle.classList.remove('display-player-btn');
+  }, 2500);
+}
+
+// Block the click event for each main button
+function blockTheMainButtons() {
+  buttons.forEach((button) => {
+    button.classList.add('disable');
+  });
+}
+
+// Enable click events for each main button
+function enableMainButtons() {
+  setTimeout(() => {
+    // Enable main buttons
+    buttons.forEach((button) => {
+      button.classList.remove('disable');
+    });
+  }, 2500);
+}
+
+/* ------------------------------- GAME LOGIC ------------------------------- */
+
+// Array with options
 const optionsToElect = ['Rock', 'Paper', 'Scissor'];
 
 // Variables of players count
 let playerScore = 0;
 let alienScore = 0;
 
-// Function of alien random selection
+// Function of computer random selection
 function computerSelection() {
   // Variable = random election of array length
   let randomElection = Math.floor(Math.random() * optionsToElect.length);
@@ -86,26 +183,15 @@ function computerSelection() {
   return randomElection;
 }
 
-// HUMAN LOGIC -----------------------
-// On click event return the id of the clicked button
-const buttons = document.querySelectorAll('.btn-circles');
-
-buttons.forEach((e) => {
-  e.addEventListener('click', () => {
-    setTimeout(() => {
-      playRound(e);
-    }, 1500);
-    shinesTheChoosen(e);
-  });
-});
-
+// One round game
 function playRound(e) {
   let playerChoise = optionsToElect[e.id];
 
   let computerChoiseNumber = computerSelection();
   let computerChoise = optionsToElect[computerChoiseNumber];
 
-  displayComputerCircle(computerChoiseNumber);
+  // Display computer chosen circle
+  displayComputerElectedCircle(computerChoiseNumber);
 
   setTimeout(() => {
     if (playerChoise == computerChoise) {
@@ -130,81 +216,3 @@ function playRound(e) {
     }
   }, 1000);
 }
-
-// GAME ----------------------------------------------
-
-function game(e) {
-  while (playerScore != 5 || alienScore != 5) {
-    setTimeout(() => {
-      playRound(e);
-    }, 1500);
-  }
-}
-
-// SHINE FUNCTION OF CLICKED BUTTONS --------
-function shinesTheChoosen(e) {
-  e.classList.remove('shine');
-  setInterval(() => {
-    e.classList.add('shine');
-  }, 200);
-}
-
-// DISPLAY AND DISAPPEAR PLAYER ELECTED CIRCLE --------
-buttons.forEach((e) => {
-  e.addEventListener('animationend', () => {
-    displayPlayerCircle(e);
-
-    // Disappear circles
-    setTimeout(() => {
-      let playerCircleToDisappear = document.querySelector('.btn-player');
-      playerCircleToDisappear.classList.remove('display-player-btn');
-
-      let computerCircleToDissapear = document.querySelector('.btn-alien');
-      computerCircleToDissapear.classList.remove('display-player-btn');
-
-      // enable main buttons
-      buttons.forEach((button) => {
-        button.classList.remove('disable');
-      });
-    }, 2500);
-  });
-});
-
-function displayPlayerCircle(e) {
-  const playerCircle = document.querySelector('.btn-player');
-  playerCircle.classList.add('display-player-btn');
-
-  // Fill button with corresponding image
-  document.querySelector(
-    '.btn-player'
-  ).lastElementChild.innerHTML = `${e.lastElementChild.innerHTML}`;
-
-  // Shine the elected circle
-  shinesTheChoosen(playerCircle);
-}
-
-// DISPLAY COMPUTER ELECTED CIRCLE --------
-function displayComputerCircle(computerResult) {
-  const computerCircle = document.querySelector('.btn-alien');
-  /* const randomElection = Math.floor(Math.random() * optionsToElect.length); */
-
-  buttons.forEach((e) => {
-    if (computerResult == e.id) {
-      computerCircle.lastElementChild.innerHTML = `${e.lastElementChild.innerHTML}`;
-
-      computerCircle.classList.add('display-player-btn');
-      shinesTheChoosen(computerCircle);
-    }
-  });
-}
-
-// DISABLE MAIN BUTTOS
-buttons.forEach((e) => {
-  e.addEventListener('animationend', () => {
-    buttons.forEach((button) => {
-      button.classList.add('disable');
-    });
-  });
-});
-
-// ORDENAR TODOOOOOOO BIEN

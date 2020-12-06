@@ -261,14 +261,14 @@ main {
 }
 
 /* Game fade in */
-/* .game-faded-out {
+.game-faded-out {
   opacity: 0;
   transition: all 1s ease-in;
 }
 
 .game-fade-in {
   opacity: 1;
-} */
+}
 
 /* Shine of buttons */
 
