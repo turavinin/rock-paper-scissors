@@ -498,6 +498,10 @@ main {
     margin: 0 20px;
   }
 
+  .subtitle-wrapper {
+    margin: 0 10px;
+  }
+
   .game-wrapper {
     display: flex;
     flex-direction: column;
