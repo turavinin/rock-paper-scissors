@@ -106,8 +106,20 @@ buttons.forEach((e) => {
 skipButton.addEventListener('click', (e) => {
   skipIntro(); // Skip the intro
   e.target.classList.add('disable-intro'); // Disappear the skip button
+  btnRules.classList.add('display-btn-rules');
 });
 
+postGameSentences.forEach((e) => {
+  e.addEventListener('transitionend', () => {
+    displayRestarButton();
+  });
+});
+
+restartBtn.addEventListener('click', () => {
+  window.location.reload();
+});
+
+// Listeners for rules button
 btnRules.addEventListener('click', () => {
   modal.style.display = 'block';
 });
@@ -120,16 +132,6 @@ window.addEventListener('click', (e) => {
   if (e.target == modal) {
     modal.style.display = 'none';
   }
-});
-
-postGameSentences.forEach((e) => {
-  e.addEventListener('transitionend', () => {
-    displayRestarButton();
-  });
-});
-
-restartBtn.addEventListener('click', () => {
-  window.location.reload();
 });
 
 /* -------------------------------- FUNCTIONS ------------------------------- */

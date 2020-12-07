@@ -392,11 +392,16 @@ main {
 }
 
 .btn-rules {
+  opacity: 0;
   font-size: 1.5rem;
   font-family: 'Syne Mono', monospace;
   color: #fff;
   background-color: transparent;
   border: none;
+}
+
+.display-btn-rules {
+  opacity: 1;
 }
 
 .btn-rules:focus {
