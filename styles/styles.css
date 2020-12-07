@@ -326,7 +326,7 @@ main {
 /* ----- Post game sentence ----- */
 .post-game-sentence {
   display: inline-block;
-  font-size: 2rem;
+  font-size: 1.5rem;
   height: 0;
 }
 
@@ -352,7 +352,7 @@ main {
 .display-sentence {
   display: inline-block;
   opacity: 1;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   transform: translateY(0px);
 }
 
@@ -508,6 +508,10 @@ main {
     justify-content: center;
     align-items: center;
     margin-top: 150px;
+  }
+
+  .post-game-sentence {
+    font-size: 1rem;
   }
 
   /* ----------------------------------RESTART BUTTON ---------------------------------- */
