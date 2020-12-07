@@ -78,16 +78,17 @@ function fadeInFadeOut(currentSentence) {
 // Listen the end of transition of the final character of intro
 const finalCharOfLastIntroSentence =
   subtitleWrapper.lastElementChild.lastElementChild;
-finalCharOfLastIntroSentence.addEventListener(
-  'transitionend',
-  displayFinalSentence
-);
+finalCharOfLastIntroSentence.addEventListener('transitionend', () => {
+  displayFinalSentence();
+  skipButton.classList.add('disable-intro');
+});
 
 // Display final sentence and display the Game UI
 function displayFinalSentence() {
   setTimeout(() => {
     finalSentence.classList.add('final-fade-in'); // Fade-in final sentence
     gameWrapper.classList.add('game-fade-in'); // Fade-in the game UI
+    btnRules.classList.add('display-btn-rules');
   }, FINAL_SENTENCE_APPARITION_DELAY);
 }
 
