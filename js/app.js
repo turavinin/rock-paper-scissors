@@ -16,9 +16,14 @@ const finalSentence = document.querySelector('.final-subtitle-text');
 const buttons = document.querySelectorAll('.btn-circles');
 const playerCircle = document.querySelector('.btn-player');
 const computerCircle = document.querySelector('.btn-alien');
+const postGameSentences = document.querySelectorAll('.post-game-sentence');
 const humanWinSetence = document.querySelector('.human-win');
 const alienWinSetence = document.querySelector('.alien-win');
 const skipButton = document.querySelector('.skip-button');
+const restartBtn = document.querySelector('.btn-restart');
+const modal = document.getElementById('myModal');
+const btnRules = document.querySelector('.btn-rules');
+const closeRules = document.querySelector('.close');
 
 /* ---------------------------------- INTRO --------------------------------- */
 
@@ -86,7 +91,7 @@ function displayFinalSentence() {
   }, FINAL_SENTENCE_APPARITION_DELAY);
 }
 
-/* -------------------------------- UI EVENTS ------------------------------- */
+/* -------------------------------- LISTENERS / UI EVENTS ------------------------------- */
 
 // Lister for the end of shine animation of main buttons
 buttons.forEach((e) => {
@@ -98,7 +103,34 @@ buttons.forEach((e) => {
   });
 });
 
-skipButton.addEventListener('click', skipIntro);
+skipButton.addEventListener('click', (e) => {
+  skipIntro(); // Skip the intro
+  e.target.classList.add('disable-intro'); // Disappear the skip button
+});
+
+btnRules.addEventListener('click', () => {
+  modal.style.display = 'block';
+});
+
+closeRules.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
+
+window.addEventListener('click', (e) => {
+  if (e.target == modal) {
+    modal.style.display = 'none';
+  }
+});
+
+postGameSentences.forEach((e) => {
+  e.addEventListener('transitionend', () => {
+    displayRestarButton();
+  });
+});
+
+restartBtn.addEventListener('click', () => {
+  window.location.reload();
+});
 
 /* -------------------------------- FUNCTIONS ------------------------------- */
 
@@ -170,6 +202,10 @@ function displayPostGameSentence(winnerSentence) {
   setTimeout(() => {
     winnerSentence.classList.add('display-sentence');
   }, 2000);
+}
+
+function displayRestarButton() {
+  restartBtn.classList.add('display-restart-button');
 }
 
 function skipIntro() {
