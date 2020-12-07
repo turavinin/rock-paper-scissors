@@ -464,6 +464,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-size: initial;
   }
 
   /* --------------------------------- HEADER --------------------------------- */
@@ -503,6 +504,83 @@ main {
     justify-content: center;
     align-items: center;
     margin-top: 150px;
+  }
+
+  /* ----------------------------------RESTART BUTTON ---------------------------------- */
+
+  .btn-restart {
+    margin-top: 100px;
+    font-size: 1.5rem;
+  }
+
+  .btn-rules {
+    font-size: 1rem;
+  }
+
+  .modal-content {
+    width: 90vw;
+  }
+
+  .modal-content > p {
+    font-size: 1.5rem;
+    padding-bottom: 20px;
+  }
+
+  .close {
+    color: rgb(0, 0, 0);
+    font-size: 3rem;
+    font-weight: bold;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   TABLET                                   */
+/* -------------------------------------------------------------------------- */
+@media (min-width: 600px) and (max-width: 1024px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-size: cover;
+  }
+
+  /* --------------------------------- HEADER --------------------------------- */
+
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    margin-top: 50px;
+  }
+
+  .h1-title {
+    font-family: 'Kanit', sans-serif;
+    color: var(--fontColor);
+    font-size: 3rem;
+    text-align: center;
+  }
+
+  /* ---------------------------------- MAIN ---------------------------------- */
+
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: auto;
+    margin: 0;
+  }
+
+  .game-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
   }
 
   /* ----------------------------------RESTART BUTTON ---------------------------------- */
