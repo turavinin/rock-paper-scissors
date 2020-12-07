@@ -250,7 +250,7 @@ function game() {
         // Play the round
         playRound(playerChoise, computerChoise);
 
-        if (playerScore == 3) {
+        if (playerScore == 5) {
           // Timer to slowdown the restart of the game
           playerCircle.addEventListener('transitionend', () => {
             document.querySelector('.final-subtitle-text').textContent =
@@ -261,7 +261,7 @@ function game() {
             document.querySelector('.alien-number').textContent = alienScore;
             displayPostGameSentence(humanWinSetence);
           }, 3000);
-        } else if (alienScore == 3) {
+        } else if (alienScore == 5) {
           playerCircle.addEventListener('transitionend', () => {
             document.querySelector('.final-subtitle-text').textContent =
               'You lose the game!';
