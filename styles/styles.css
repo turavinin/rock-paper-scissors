@@ -408,6 +408,8 @@ main {
   display: flex;
   flex-direction: row;
   width: 100vw;
+  position: fixed;
+  bottom: 0;
 }
 
 /* Button */
