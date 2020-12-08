@@ -94,7 +94,7 @@ function displayFinalSentence() {
 
 /* -------------------------------- LISTENERS / UI EVENTS ------------------------------- */
 
-// Lister for the end of shine animation of main buttons
+// Listen for the end of shine animation of main buttons
 buttons.forEach((e) => {
   e.addEventListener('animationend', () => {
     displayPlayerElectedCircles(e);
@@ -110,11 +110,12 @@ skipButton.addEventListener('click', (e) => {
   btnRules.classList.add('display-btn-rules');
 });
 
-postGameSentences.forEach((e) => {
+// Listen for the end of transtions of post games
+/* postGameSentences.forEach((e) => {
   e.addEventListener('transitionend', () => {
     displayRestarButton();
   });
-});
+}); */
 
 restartBtn.addEventListener('click', () => {
   window.location.reload();
@@ -197,20 +198,23 @@ function enableMainButtons() {
   }, 2500);
 }
 
-// Display final sentence after the game
+// Display Post-game Sentence and Restart Button
 function displayPostGameSentence(winnerSentence) {
   gameWrapper.classList.remove('game-fade-in'); // Fade-out the game UI
   finalSentence.classList.remove('final-fade-in'); // Fade-out final sentence
 
   setTimeout(() => {
     winnerSentence.classList.add('display-sentence');
+    displayRestarButton(); // Display restart button
   }, 2000);
 }
 
+// Display restart button
 function displayRestarButton() {
   restartBtn.classList.add('display-restart-button');
 }
 
+// Skip intro
 function skipIntro() {
   subtitleWrapper.classList.add('disable-intro');
   finalSentence.classList.add('final-fade-in'); // Fade-in final sentence
@@ -253,7 +257,7 @@ function game() {
         // Play the round
         playRound(playerChoise, computerChoise);
 
-        if (playerScore == 5) {
+        if (playerScore == 1) {
           // Timer to slowdown the restart of the game
           playerCircle.addEventListener('transitionend', () => {
             document.querySelector('.final-subtitle-text').textContent =
@@ -264,7 +268,7 @@ function game() {
             document.querySelector('.alien-number').textContent = alienScore;
             displayPostGameSentence(humanWinSetence);
           }, 3000);
-        } else if (alienScore == 5) {
+        } else if (alienScore == 1) {
           playerCircle.addEventListener('transitionend', () => {
             document.querySelector('.final-subtitle-text').textContent =
               'You lose the game!';

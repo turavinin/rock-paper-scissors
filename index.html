@@ -14,6 +14,8 @@
 </head>
 
 <body>
+
+  <!-- ------------------------------- HEADER -------------------------------- -->
   <header id="header">
     <div class="skip">
       <button class="skip-button">Skip Intro</button>
@@ -22,8 +24,13 @@
       <h1 class="h1-title">HUMANS VS ALIENS</h1>
     </div>
   </header>
+
+  <!-- -------------------------------- MAIN --------------------------------- -->
   <main id="main">
+
+    <!-- ----SUBTITLE WRAPPER---- -->
     <div class="subtitle-wrapper">
+      <!-- Intro Subtitles -->
       <div class="subtitle">
         <p class="subtitle-text"">Miserable humans, your planet will be ours</p>
         <p class=" subtitle-text"">Your only chance to survive is to beat us</p>
@@ -31,16 +38,22 @@
         <p class=" subtitle-text"">And let's battle in our precious game</p>
         <p class=" subtitle-text">Rock, paper or scissors</p>
       </div>
+      <!-- Final Subtitle -->
       <div class="final-subtitle">
         <p class="final-subtitle-text">Choose your weapon!</p>
       </div>
+      <!-- Post Game Sentence -->
       <div class="post-game-sentence">
         <p class="human-win">Bye, bye aliens! Go home! =)</p>
         <p class="alien-win">As always humans... disappointing the universe.</p>
       </div>
     </div>
+
+    <!-- ----GAME WRAPPER---- -->
     <div class="game-wrapper game-faded-out">
+      <!-- SCORE WRAPPER -->
       <div class="score-wrapper">
+        <!-- Player Circle -->
         <div class="player-circle">
           <button class="btn-elected btn-player">
             <span class="wrapper-elected">
@@ -48,6 +61,7 @@
             </span>
           </button>
         </div>
+        <!-- Score -->
         <div class="score">
           <div class="human-score">
             <h2>HUMANS</h2>
@@ -58,6 +72,7 @@
             <p class="alien-number">0</p>
           </div>
         </div>
+        <!-- Alien Circle -->
         <div class="alien-circle">
           <button class="btn-elected btn-alien">
             <span class="wrapper-elected">
@@ -66,35 +81,45 @@
           </button>
         </div>
       </div>
+
+      <!-- ----MAIN BUTTONS WRAPPER---- -->
       <div class="circle-wrapper">
+        <!-- BUTTONS -->
         <div class="circles">
+          <!-- Paper button -->
           <button class="btn-circles btn-paper" id="1">
             <span class="wrapper">
               <img src="./images/icon-paper.svg" alt="Paper icon">
             </span>
           </button>
+          <!-- Paper Scissors -->
           <button class="btn-circles btn-scissors" id="2">
             <span class="wrapper">
               <img src="./images/icon-scissors.svg" alt="Scissors icon">
             </span>
           </button>
+          <!-- Rock button -->
           <button class="btn-circles btn-rock" id="0">
             <span class="wrapper">
               <img src="./images/icon-rock.svg" alt="Rock icon">
             </span>
           </button>
         </div>
-
       </div>
     </div>
+    <!-- ----RESTART BUTTON---- -->
     <div class="restart">
       <button class="btn-restart">Restart game</button>
     </div>
+  </main>
 
-    <!-- -------------------------------- RULES -------------------------------- -->
+  <!-- -------------------------------- FOOTER --------------------------------- -->
+  <footer class="rules-ftr">
+    <!-- ----RULES BUTTON ---- -->
     <div class="btn-rules-wrapper">
       <button class="btn-rules">Rules</button>
     </div>
+    <!-- RULES POPUP -->
     <div id="myModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
@@ -102,9 +127,9 @@
         <img src="./images/image-rules.svg" alt="rules">
       </div>
     </div>
+  </footer>
 
-  </main>
-
+  <!-- -------------------------------- JS SCRIPT --------------------------------- -->
   <script src=" ./js/app.js">
   </script>
 </body>
