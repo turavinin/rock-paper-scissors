@@ -5,7 +5,10 @@ const CHARACTER_INTERVAL = 100;
 const FINAL_SENTENCE_APPARITION_DELAY = 3000;
 
 /* ------------------------------- PAGE LOADER ------------------------------ */
-window.onload = startSentence(document.querySelector('.subtitle-text'));
+window.onload = () => {
+  startSentence(document.querySelector('.subtitle-text'));
+  blockTheMainButtons();
+};
 
 /* ------------------------------ DOM VARIABLES ----------------------------- */
 
@@ -85,6 +88,7 @@ finalCharOfLastIntroSentence.addEventListener('transitionend', () => {
 
 // Display final sentence and display the Game UI
 function displayFinalSentence() {
+  enableMainButtons(100);
   setTimeout(() => {
     finalSentence.classList.add('final-fade-in'); // Fade-in final sentence
     gameWrapper.classList.add('game-fade-in'); // Fade-in the game UI
@@ -100,22 +104,16 @@ buttons.forEach((e) => {
     displayPlayerElectedCircles(e);
     blockTheMainButtons();
     disappearElectedCircles();
-    enableMainButtons();
+    enableMainButtons(2500);
   });
 });
 
 skipButton.addEventListener('click', (e) => {
   skipIntro(); // Skip the intro
+  enableMainButtons(100);
   e.target.classList.add('disable-intro'); // Disappear the skip button
   btnRules.classList.add('display-btn-rules');
 });
-
-// Listen for the end of transtions of post games
-/* postGameSentences.forEach((e) => {
-  e.addEventListener('transitionend', () => {
-    displayRestarButton();
-  });
-}); */
 
 restartBtn.addEventListener('click', () => {
   window.location.reload();
@@ -189,13 +187,13 @@ function blockTheMainButtons() {
 }
 
 // Enable click events for each main button
-function enableMainButtons() {
+function enableMainButtons(timer) {
   setTimeout(() => {
     // Enable main buttons
     buttons.forEach((button) => {
       button.classList.remove('disable');
     });
-  }, 2500);
+  }, timer);
 }
 
 // Display Post-game Sentence and Restart Button
@@ -257,7 +255,7 @@ function game() {
         // Play the round
         playRound(playerChoise, computerChoise);
 
-        if (playerScore == 1) {
+        if (playerScore == 5) {
           // Timer to slowdown the restart of the game
           playerCircle.addEventListener('transitionend', () => {
             document.querySelector('.final-subtitle-text').textContent =
@@ -268,7 +266,7 @@ function game() {
             document.querySelector('.alien-number').textContent = alienScore;
             displayPostGameSentence(humanWinSetence);
           }, 3000);
-        } else if (alienScore == 1) {
+        } else if (alienScore == 5) {
           playerCircle.addEventListener('transitionend', () => {
             document.querySelector('.final-subtitle-text').textContent =
               'You lose the game!';
