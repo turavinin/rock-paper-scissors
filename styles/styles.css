@@ -507,7 +507,7 @@ main {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    background-position-x: -400px;
+    background-position-x: -650px;
   }
 
   /* --------------------------------- HEADER --------------------------------- */
@@ -563,7 +563,7 @@ main {
 
   .human-score,
   .alien-score {
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
   }
 
   /* ----------------------------------RESTART BUTTON ---------------------------------- */
