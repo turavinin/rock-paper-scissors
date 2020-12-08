@@ -457,20 +457,34 @@ main {
   align-items: center;
   background-color: #fefefe;
   margin: 10% auto;
-  padding: 20px 0;
+  padding-bottom: 20px;
   border: 1px solid rgb(109, 109, 109);
   border-radius: 5%;
   width: 400px;
 }
 
-.modal-content > p {
-  font-size: 2rem;
+.rules-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.rules-wrapper > p {
+  font-size: 1.5rem;
   padding-bottom: 20px;
 }
 
+.close-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
 .close {
+  padding-right: 10px;
   color: rgb(0, 0, 0);
-  font-size: 3rem;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
@@ -575,7 +589,7 @@ main {
 
   .close {
     color: rgb(0, 0, 0);
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: bold;
   }
 }
