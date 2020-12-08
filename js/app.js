@@ -244,8 +244,9 @@ function game() {
       let computerChoise = optionsToElect[computerChoiseNumber];
       // Display circle elected by computer
 
-      // Shine clicked button
+      // Shine clicked button and block it
       shinesButton(e);
+      blockTheMainButtons();
 
       // Timeout for the start of the game
       setTimeout(() => {
